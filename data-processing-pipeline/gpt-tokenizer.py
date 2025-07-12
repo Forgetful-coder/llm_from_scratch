@@ -41,5 +41,28 @@ def create_dataloader_v1(txt, batch_size=4, max_length=256,
 
     return dataloader
 
+def add_token_embeddings(vocab_size, output_dim):
+
+    with open("data/the-verdict.txt", 'r', encoding = "utf-8" ) as f:
+        txt = f.read()
+
+    token_embeddings_layer = torch.nn.Embedding(vocab_size,output_dim)
+    max_length = 4
+    dataloader = create_dataloader_v1(
+    txt, batch_size=8, max_length=max_length,
+    stride=max_length, shuffle=False
+    )
+    pos_embeddings_layer = torch.nn.Embedding(max_length,output_dim)
+    pos_embeddings = pos_embeddings_layer(torch.arange(max_length))
+    
+
+    for inputs, targets in dataloader:
+
+        input_embeddings = token_embeddings_layer(inputs)
+
+        input_embeddings = input_embeddings + pos_embeddings
+
+
+    
     
         
