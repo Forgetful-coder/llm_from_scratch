@@ -17,7 +17,7 @@ class FeedForward(nn.Module):
     def forward(self, x):
         return self.layers(x)
 
-class TrasnformerBlock(nn.Module):
+class TransformerBlock(nn.Module):
 
     def __init__(self, cfg):
         
