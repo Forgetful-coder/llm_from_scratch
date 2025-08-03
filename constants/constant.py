@@ -7,3 +7,6 @@ GPT_CONFIG_124M = {
     "drop_rate": 0.1,       # Dropout rate
     "qkv_bias": False       # Query-Key-Value bias
 }
+
+FILE_PATH = "the-verdict.txt"
+URL= "https://raw.githubusercontent.com/rasbt/LLMs-from-scratch/main/ch02/01_main-chapter-code/the-verdict.txt"
