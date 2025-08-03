@@ -5,7 +5,7 @@ from utils.utils import tokenize
 
 class GenerateText:
     
-    def generate_text(self,model,idx,context_size, max_new_tokens):
+    def generate_text(self,model,idx,context_size, max_new_tokens,temp=0.5,use_sampling=True):
 
         tokenizer = tokenize()
 
@@ -15,12 +15,16 @@ class GenerateText:
 
             with torch.no_grad():
                 logits = model(idx_cond)
+                scaled_logits = logits/temp
 
-                last_vector = logits[:, -1, :]
+                last_vector = scaled_logits[:, -1, :]
 
                 probas = torch.softmax(last_vector, dim=-1)
 
-                idx_next = torch.argmax(probas,dim=-1,keepdim=True)
+                if use_sampling:
+                    idx_next = torch.multinomial(probas,num_samples=1)
+                else:
+                    idx_next = torch.argmax(probas,dim=-1,keepdim=True)
 
                 idx = torch.cat((idx,idx_next), dim=-1)
         
